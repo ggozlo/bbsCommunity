@@ -12,55 +12,54 @@ ___
 
 
 
-###사용프레임워크 및 라이브러리
+### 사용기술
+* JDK 15
 * Spring Boot
 * Thymeleaf
 * Spring Security
 * Spring Validation
 * Spring Data JPA
 * PostgreSQL
+* Git
+### 개발환경
+* windows 10
+* InteliJ Ultimate edition
 ##
-###목표
-  - ####게시글 (Post) 기능
+### 목표
+  - #### 게시글 (Post) 기능
     - [ ] 게시글 작성
     - [ ] 게시글 수정
     - [ ] 게시글 삭제
     - [ ] 게시글 추천 
     - [ ] 조회수 
-  - ####댓글 (Comment) 기능
+  - #### 댓글 (Comment) 기능
     - [ ] 비동기 댓글 작성 
     - [ ] 비동기 댓글 삭제 
-  - ####게시판 (Board) 기능
+  - #### 게시판 (Board) 기능
     - [ ] 게시글 페이징 
     - [ ] 게시글 검색 
     - [ ] 추천 다수 획득 게시글 조회
-  - ####회원 (Member) 기능
+  - #### 회원 (Member) 기능
     - [ ] 회원가입 
     - [ ] 로그인 
     - [ ] 게시판 생성 요청
     - [ ] 작성한 게시글 조회
     - [ ] 작성한 댓글 조회
     - [ ] 게시판 활성화시 권한 획득
-  - ####관리자 (Admin, Manager) 기능
+  - #### 관리자 (Admin, Manager) 기능
     - [ ] 게시판 생성 요청 승인
     - [ ] 권한이 있는 게시판의 게시글 삭제
     - [ ] 게시판 폐쇄
     - [ ] 권한이 있는 게시판 수정
-  - ####기타 기능 
+  - #### 기타 기능 
     - [ ] 게시판 목록 페이지 조회
     - [ ] 게시판 검색
     - [ ] 최근 접속한 게시판 
 ##
-    
-
-  
-  
-
-
 
 ---
-##Version-0 _Initial Version_
-###21.09.22
+## Version-0 _Initial Version_
+### 21.09.22
 ###
 ### 생성 화면
 ![InitialImage](./outputs/SpringInitialCapture.PNG)
