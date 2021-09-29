@@ -76,6 +76,7 @@ ___
 ###
 ### ERD
 ![BasicDataBase](./outputs/version_0.1/ERD.PNG)
+
 ###
 ### Comment
  1. PostgresSql 을 설치하고 해당 프로젝트와 연동하였습니다.  
@@ -84,8 +85,10 @@ ___
  2. 우선 제시된 목표에 맞춰서 DB를 설계하는게 가장 최우선으로 여기기때문에
 QuickDBD 사이트에서 ERD 를 그렸습니다. DDL sql 파일도 획득하였지만 ORM 에서도 자동으로
 생성해주는 기술이 있으므로 적용하지는 않았습니다.
- 3. JPA Entity 를 작성하고 Junit5 테스트 프레임워크환경에서
-순수 하이버네이트 기술을 사용하여 테스트를 진행하였습니다.  
+ 3. JPA Entity 를 작성하고 Junit5 테스트 프레임워크환경에서 순수 하이버네이트 기술을 사용하여 간단한 테스트를 진행하였습니다.   
+테스트 단위를 좀더 쪼갯으면 좋았겟지만... 간단하게 작성하였습니다.  
+[작성된 도메인들](/src/main/java/ggozlo/bbsCommunity/domain/entity)
+[DB 테스트 파일](/src/test/java/ggozlo/bbsCommunity/db/MemberTest.java)
  4. 회원, 게시글, 댓글, 사용자 권한은 고유한 Id 넘버를 가지며 
 게시판은 게시판 영문명을 PK 로 삼고 사이트 url 주소도 영문명으로 사용할 예정 입니다. 
  5. Authority 테이블은 한 사용자가 다수의 게시판의 관리자가 될수 있고 한 게시판은 다수의 
