@@ -21,6 +21,7 @@ ___
 * Spring Data JPA
 * PostgreSQL
 * Git
+* Bootstrap 5
 ### 개발환경
 * windows 10
 * InteliJ Ultimate edition
@@ -68,7 +69,7 @@ ___
 개인 프로젝트 BBSCommunity 의 Initial 버전으로 프로젝트를 생성후
 누락된 Spring Validation 을 추가하고 ReadMe에 목표와 개요를 작성하였습니다.
 현재 수립된 목표를 기반으로 RDB를 설계하고 JPA Entity로 구현하여 버전 0.1.0 으로 등록할것입니다.  
-추후 제작과정에서 세부 작업내용은 개인 티스토리에 업로드 하는것이 목표입니다.
+
 
 --- 
 ## Version 0.1 basicDataBase
@@ -86,9 +87,7 @@ ___
 QuickDBD 사이트에서 ERD 를 그렸습니다. DDL sql 파일도 획득하였지만 ORM 에서도 자동으로
 생성해주는 기술이 있으므로 적용하지는 않았습니다.
  3. JPA Entity 를 작성하고 Junit5 테스트 프레임워크환경에서 순수 하이버네이트 기술을 사용하여 간단한 테스트를 진행하였습니다.   
-테스트 단위를 좀더 쪼갯으면 좋았겟지만... 간단하게 작성하였습니다.  
-[작성된 도메인들](/src/main/java/ggozlo/bbsCommunity/domain/entity)
-[DB 테스트 파일](/src/test/java/ggozlo/bbsCommunity/db/MemberTest.java)
+테스트 단위를 좀더 쪼갯으면 좋았겟지만... 간단하게 작성하였습니다.
  4. 회원, 게시글, 댓글, 사용자 권한은 고유한 Id 넘버를 가지며 
 게시판은 게시판 영문명을 PK 로 삼고 사이트 url 주소도 영문명으로 사용할 예정 입니다. 
  5. Authority 테이블은 한 사용자가 다수의 게시판의 관리자가 될수 있고 한 게시판은 다수의 
@@ -96,4 +95,17 @@ QuickDBD 사이트에서 ERD 를 그렸습니다. DDL sql 파일도 획득하였
 Admin 권한은 해당테이블에서 정의할 예정이므로 BoardId 는 NULLABLE 로 적용하였습니다.
  6. 작성하다가 깨닫은 것이 생성시간과 수정시간을 누락했습니다.... 다음버전에서 상속기능을 사용하여
 각 Entity 클래스들에 추가할 예정입니다.
+ 7. 다음 목표는 기본적인 Controller - Service - Repository 로직의 구현 입니다.
 
+---
+### 2021.10.22
+1. 회원 사용자의 기능들을 구현하였습니다.
+2. 쿼리메소드, 순수 JPA, queryDSL 을 사용하여 DB에 접근합니다. 
+3. [MemberServiceTest](src/test/java/ggozlo/bbsCommunity/domain/member/MemberServiceTest.java)
+회원 로직의 테스트 케이스들을 작성했습니다.
+4. CustomException 과 그 자식타입을 정의하고 자식타입들을 핸들링 할수있는 [CustomControllerAdvice](src/main/java/ggozlo/bbsCommunity/global/CustomControllerAdvice.java)
+객체를 정의하였습니다.
+5. 스프링 시큐리티를 사용하여 회원가입, 로그인 기능을 구현하였습니다.
+6. 권한은 기본적으로 PermitAll 이며 필요한경우 메소드로 제한하며 권한이 부족하다면 정의된 AccessDeniedHandler 에 의해 
+리다이렉트 됩니다.
+7. 타입리프와 부트스트랩을 사용하여 기본적인 화면을 구현했습니다.

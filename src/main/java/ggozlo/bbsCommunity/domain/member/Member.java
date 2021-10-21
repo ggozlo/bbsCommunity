@@ -1,5 +1,8 @@
-package ggozlo.bbsCommunity.domain.entity;
+package ggozlo.bbsCommunity.domain.member;
 
+import ggozlo.bbsCommunity.domain.comment.Comment;
+import ggozlo.bbsCommunity.domain.member.authority.Authority;
+import ggozlo.bbsCommunity.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,38 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @SequenceGenerator(
         sequenceName = "memberSeq",
         name = "memberSeq"
 )
-@EqualsAndHashCode(of = {"id", "name"})
+@EqualsAndHashCode(of = {"id", "username", "email", "nickname"})
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberSeq")
     private Long id;
 
+    @Setter
     @Column(length = 20, unique = true, nullable = false)
-    private String loginId;
+    private String username;
 
-    @Column(length = 18, nullable = false)
+    @Setter
+    @Column(length = 100, nullable = false)
     private String password;
 
+    @Setter
     @Column(length = 320, unique = true, nullable = false)
     private String email;
 
+    @Setter
     @Column(length = 20, unique = true, nullable = false)
-    private String name;
-
-    @Builder
-    public Member(String loginId, String password, String email, String name) {
-        this.loginId = loginId;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-    }
+    private String nickname;
 
     @OneToMany(orphanRemoval = true, mappedBy = "member")
     private List<Post> postList = new ArrayList<>();
@@ -49,6 +48,16 @@ public class Member {
     @OneToMany(orphanRemoval = true, mappedBy = "member")
     private List<Authority> authorityList = new ArrayList<>();
 
+
+
+
+    @Builder
+    public Member(String username, String password, String email, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+    }
 
 
 }

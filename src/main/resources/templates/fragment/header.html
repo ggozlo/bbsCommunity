@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<header class="p-3 bg-dark text-white" th:fragment="header">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+            </ul>
+
+
+
+            <div class="text-end">
+
+                <a href="/login" sec:authorize="isAnonymous()">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                </a>
+                <a href="/member/info">
+                    <button type="button" class="btn btn-outline-light me-2" th:text="#{Member.Info}"
+                    sec:authorize="isAuthenticated()">회원정보</button>
+                </a>
+                <button sec:authorize="isAnonymous()" type="button" onclick="location.href='/member/join'"
+                        th:text="#{Member.Join}" class="btn btn-warning">회원가입</button>
+                <button sec:authorize="isAuthenticated()" type="button" onclick="location.href='/logout'"
+                        class="btn btn-warning">로그아웃</button>
+
+            </div>
+            <div style="margin-left: 10px">
+                    <h4 sec:authorize="isAuthenticated()" sec:authentication="principal.nickname">사용자</h4>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

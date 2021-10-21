@@ -1,5 +1,8 @@
-package ggozlo.bbsCommunity.domain.entity;
+package ggozlo.bbsCommunity.domain.post;
 
+import ggozlo.bbsCommunity.domain.board.Board;
+import ggozlo.bbsCommunity.domain.comment.Comment;
+import ggozlo.bbsCommunity.domain.member.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @SequenceGenerator(
         sequenceName = "postSeq", name = "postSeq"

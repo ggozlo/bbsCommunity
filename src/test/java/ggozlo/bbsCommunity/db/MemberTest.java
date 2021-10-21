@@ -1,6 +1,10 @@
 package ggozlo.bbsCommunity.db;
 
-import ggozlo.bbsCommunity.domain.entity.*;
+import ggozlo.bbsCommunity.domain.board.Board;
+import ggozlo.bbsCommunity.domain.comment.Comment;
+import ggozlo.bbsCommunity.domain.member.authority.Authority;
+import ggozlo.bbsCommunity.domain.member.Member;
+import ggozlo.bbsCommunity.domain.post.Post;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @SpringBootTest
@@ -30,7 +32,7 @@ public class MemberTest {
         Assertions.assertEquals(member, findMember);
 
         // 수정
-        findMember.setName("changed");
+        findMember.setNickname("changed");
         flushAndClear(entityManager);
         Member changedMember = entityManager.find(Member.class, member.getId());
         Assertions.assertEquals(findMember, changedMember);
@@ -101,7 +103,8 @@ public class MemberTest {
         flushAndClear(entityManager);
 
         Authority findAuthority = entityManager
-                .createQuery("select a from Authority a", Authority.class).getSingleResult();
+                .createQuery("select a from Authority a where a.member.username = :username", Authority.class)
+                .setParameter("username", member.getUsername()).getSingleResult();
         System.out.println("=============================");
         Assertions.assertEquals(findAuthority, authority);
         Assertions.assertEquals(findAuthority.getMember(), member);
@@ -154,9 +157,9 @@ public class MemberTest {
 
     private Member createMember(String name) {
         Member member = Member.builder()
-                .loginId("loginId" + name)
+                .username("username" + name)
                 .password("password" + name)
-                .name(name)
+                .nickname(name)
                 .email(name + "email.com")
                 .build();
         return member;

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head"></head>
+
+<body>
+
+    <header th:replace="/fragment/header::header"></header>
+    <div class="container">
+        <h1>MemberDetails</h1>
+        <h4 th:text="${member}"></h4>
+        <form method="post" th:action="@{/member/edit/username}">
+            <input type="text" name="newUsername">
+            <button type="submit">아이디 변경</button>
+        </form>
+        <br/>
+        <form method="post" th:action="@{/member/edit/email}">
+            <input type="text" name="newEmail">
+            <button type="submit">이메일 변경</button>
+        </form>
+        <br/>
+        <form method="post" th:action="@{/member/edit/password}">
+            <input type="text" name="newPassword">
+            <button type="submit">패스워드 변경</button>
+        </form>
+        <br/>
+        <form method="post" th:action="@{/member/edit/nickname}">
+            <input type="text" name="newNickname">
+            <button type="submit">닉네임 변경</button>
+        </form>
+        <form method="post" th:action="@{/member/delete}">
+            <button type="submit">계정 삭제</button>
+        </form>
+    </div>
+    <footer th:replace="/fragment/footer::footer"></footer>
+</body>
+</html>

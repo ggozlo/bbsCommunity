@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragment/head::head" />
+
+<body>
+    <header th:replace="/fragment/header::header"/>
+
+    <div class="container text-center">
+        <div class=" d-flex justify-content-center">
+            <div class="col-sm-5" style="margin-top: 30px;">
+
+                <div class="panel">
+                    <h3>아이디와 비밀번호를 입력해주세요</h3>
+                </div>
+                <div th:if="${param.error}" class="form-group">
+                    <h3 th:text="${exception}" class="alert alert-danger"> 잘못된 아이디나 패스워드 입니다.</h3>
+                </div>
+
+                <form th:action="@{/login_proc}" method="post">
+                    <input th:type="hidden" th:value="secret" name="secret_key">
+                    <div class="form-label">
+                        <input type="text" class="form-control" name="username" placeholder="아이디" required="required" autofocus="autofocus">
+                    </div>
+                    <div class="form-label">
+                        <input type="password" class="form-control" name="password" placeholder="패스워드" required="required" >
+                    </div>
+                    <button type="submit" class="btn btn-primary">로그인</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="/fragment/footer::footer"/>
+</body>
+
+</html>

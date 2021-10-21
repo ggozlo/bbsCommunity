@@ -11,6 +11,15 @@ spring:
     username: postgres
     password: ggozlo
 
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
 logging.level:
   org.hibernate.SQL: debug
+  ggozlo.bbsCommunity: debug
+
+
+
 

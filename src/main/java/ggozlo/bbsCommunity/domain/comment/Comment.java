@@ -1,5 +1,7 @@
-package ggozlo.bbsCommunity.domain.entity;
+package ggozlo.bbsCommunity.domain.comment;
 
+import ggozlo.bbsCommunity.domain.member.Member;
+import ggozlo.bbsCommunity.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +12,7 @@ import javax.persistence.*;
 )
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "member", "post"})
-@Getter @Setter
+@Getter
 public class Comment {
 
     @Id

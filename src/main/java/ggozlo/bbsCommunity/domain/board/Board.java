@@ -1,8 +1,9 @@
-package ggozlo.bbsCommunity.domain.entity;
+package ggozlo.bbsCommunity.domain.board;
 
 
+import ggozlo.bbsCommunity.domain.member.authority.Authority;
+import ggozlo.bbsCommunity.domain.post.Post;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,8 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of ={"name", "nickName"})
-@Getter @Setter
+@EqualsAndHashCode(of ={"nickname", "nickName"})
+@Getter
 public class Board {
 
     @Id

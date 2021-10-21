@@ -1,5 +1,7 @@
-package ggozlo.bbsCommunity.domain.entity;
+package ggozlo.bbsCommunity.domain.member.authority;
 
+import ggozlo.bbsCommunity.domain.board.Board;
+import ggozlo.bbsCommunity.domain.member.Member;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
