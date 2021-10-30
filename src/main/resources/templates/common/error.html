@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="/fragment/head::head(title = 'Error')"></head>
+
 <body>
-    <h1>Error Page</h1>
-    <h3 th:text="${message}"></h3>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container" style="max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1>Error Page</h1>
+        <h3 th:text="${message}"></h3>
+    </div>
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
 </body>
 </html>

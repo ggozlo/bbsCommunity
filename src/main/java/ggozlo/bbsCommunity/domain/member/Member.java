@@ -3,6 +3,7 @@ package ggozlo.bbsCommunity.domain.member;
 import ggozlo.bbsCommunity.domain.comment.Comment;
 import ggozlo.bbsCommunity.domain.member.authority.Authority;
 import ggozlo.bbsCommunity.domain.post.Post;
+import ggozlo.bbsCommunity.global.entity.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,8 +17,8 @@ import java.util.List;
         sequenceName = "memberSeq",
         name = "memberSeq"
 )
-@EqualsAndHashCode(of = {"id", "username", "email", "nickname"})
-public class Member {
+@EqualsAndHashCode(of = {"id", "username", "email", "name"})
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberSeq")

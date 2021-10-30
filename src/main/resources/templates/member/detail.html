@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragment/head::head"></head>
+<head th:replace="/fragment/head::head(title = '회원정보')"></head>
 
 <body>
 
     <header th:replace="/fragment/header::header"></header>
-    <div class="container">
+
+    <div class="container" style="max-width: 1200px">
         <h1>MemberDetails</h1>
-        <h4 th:text="${member}"></h4>
+        <h4 th:text="${member.username}"></h4>
+        <h4 th:text="${member.email}"></h4>
+        <h4 th:text="${member.nickname}"></h4>
+        <h4 th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+        <h4 th:text="${#temporals.format(member.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+
+
         <form method="post" th:action="@{/member/edit/username}">
             <input type="text" name="newUsername">
             <button type="submit">아이디 변경</button>
@@ -31,6 +38,7 @@
             <button type="submit">계정 삭제</button>
         </form>
     </div>
+
     <footer th:replace="/fragment/footer::footer"></footer>
 </body>
 </html>

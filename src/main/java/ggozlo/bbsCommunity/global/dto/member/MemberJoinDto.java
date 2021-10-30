@@ -1,9 +1,13 @@
-package ggozlo.bbsCommunity.global.dto;
+package ggozlo.bbsCommunity.global.dto.member;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberJoinDto {
 
     private String username;

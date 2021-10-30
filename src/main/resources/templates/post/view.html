@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = ${viewPost.title})"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container" style="max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1 th:text="${viewPost.boardNickname} + ' 게시판'">게시판</h1>
+        <h3 th:text="${viewPost.title}">제목</h3>
+        <div th:text="'작성자 : ' + ${viewPost.authorNickname} ">작성자</div>  &nbsp;
+        <div th:text="'조회수 ' + ${viewPost.views}">조회수</div>
+        <div th:if="${viewPost.author}">작성자 입니다.</div>
+        <p th:text="'작성일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">작성시간</p>
+        <p th:text="${viewPost.content}">본문</p>
+    </div>
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
+</body>
+</html>

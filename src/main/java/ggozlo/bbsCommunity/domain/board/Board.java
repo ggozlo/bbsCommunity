@@ -3,6 +3,7 @@ package ggozlo.bbsCommunity.domain.board;
 
 import ggozlo.bbsCommunity.domain.member.authority.Authority;
 import ggozlo.bbsCommunity.domain.post.Post;
+import ggozlo.bbsCommunity.global.entity.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -14,36 +15,36 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of ={"nickname", "nickName"})
-@Getter
-public class Board {
+@EqualsAndHashCode(of ={"name", "nickName"})
+@Getter @Setter
+public class Board extends BaseTimeEntity {
 
     @Id
     @Column(length = 30, nullable = false)
-    private String name;
+    private String address;
 
     @Column(length = 50, unique = true, nullable = false)
-    private String nickName;
+    private String name;
 
     private boolean activation;
 
     @Column(length = 255, nullable = true)
     private String describe;
 
-    public Board(String name) {
-        this.name = name;
+    public Board(String address) {
+        this.address = address;
     }
 
     /**
      * 사용자가 게시판 생성을 요청할때 호출될 생성자 입니다.
-     * @param name 신청된 게시판 이름 (영어만 가능)
-     * @param nickName 게시판 별명
+     * @param address 신청된 게시판 이름 (영어만 가능)
+     * @param name 게시판 별명
      * @param describe 게시판 설명 (필수사항 x)
      * @param Applicant 생성 요청자
      */
-    public Board(String name, String nickName, String describe, Authority Applicant) {
+    public Board(String address, String name, String describe, Authority Applicant) {
+        this.address = address;
         this.name = name;
-        this.nickName = nickName;
         this.describe = describe;
         activation = false;
         authorityList.add(Applicant);

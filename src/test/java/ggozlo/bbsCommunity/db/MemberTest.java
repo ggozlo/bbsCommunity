@@ -36,7 +36,7 @@ public class MemberTest {
         flushAndClear(entityManager);
         Member changedMember = entityManager.find(Member.class, member.getId());
         Assertions.assertEquals(findMember, changedMember);
-
+        Assertions.assertNotEquals(changedMember.getCreateDate().toString(), changedMember.getLastModifiedDate().toString());
         // 삭제
         entityManager.remove(changedMember);
         flushAndClear(entityManager);
@@ -87,7 +87,7 @@ public class MemberTest {
 
         flushAndClear(entityManager);
 
-        Board findBoard = entityManager.find(Board.class, board.getName());
+        Board findBoard = entityManager.find(Board.class, board.getAddress());
         Assertions.assertEquals(board, findBoard);
     }
 
@@ -96,7 +96,7 @@ public class MemberTest {
     public void AuthorityTest() {
         Board board = createBoard(null, "board");
         Member member = createMember("member");
-        Authority authority = new Authority(member, board, board.getName() + "_manager");
+        Authority authority = new Authority(member, board, board.getAddress() + "_manager");
         entityManager.persist(board);
         entityManager.persist(member);
         entityManager.persist(authority);
