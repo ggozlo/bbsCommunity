@@ -40,7 +40,7 @@ class MemberServiceTest {
     @BeforeEach
     void init() {
         testMember = new MemberJoinDto(testUsername, testPassword, testEmail, testNickname);
-        testMemberId = memberService.join(testMember);
+        testMemberId = memberService.join(testMember).getId();
         memberList.add(testMember);
         for (int i = 1; i < testUserCount; i++) {
             MemberJoinDto testMember = new MemberJoinDto();

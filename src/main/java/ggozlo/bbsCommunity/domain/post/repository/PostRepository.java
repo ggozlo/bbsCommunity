@@ -16,4 +16,5 @@ public interface PostRepository extends JpaRepository<Post, Long>, PostJpaReposi
     @Transactional(readOnly = true)
     @Query("select p.member.username from Post p inner join p.member m where p.id = :postId")
     String findAuthor(@Param("postId") Long postId);
+
 }

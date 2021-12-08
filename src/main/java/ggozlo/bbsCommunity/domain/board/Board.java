@@ -13,6 +13,11 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 게시판 테이블의 PK는 문자열인 address 로 지정하였다
+ * db 성능에 이슈가 있겟지만 경험상 사용한다.
+ */
+
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(of ={"name", "nickName"})

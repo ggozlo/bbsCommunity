@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="/js/summernote/summernote-ko-KR.min.js"></script>
+    <script src="/js/summernote/summernote-lite.min.js"></script>
+    <link rel="stylesheet" href="/css/summernote/summernote-lite.min.css">
 </head>
 <body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main" style="max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1 th:text="${boardName} + ' 게시판'">Board Title</h1>
+    </div>
+
+    <form th:object="${PostForm}" method="post" th:action="@{/board/{board}/write (board=${boardAddress})}">
+        <input class="form-control border border-2 border-dark my-3" placeholder="제목을 입력해주세요." th:field="*{title}">
+        <textarea id="summernote" th:field="*{content}"></textarea>
+        <button type="submit" class="float-end btn btn-primary m-2">작성</button>
+    </form>
+    <br/><br/>
+
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
+
+<script src="/js/summernote/summernote-setting.js"></script>
 
 </body>
 </html>

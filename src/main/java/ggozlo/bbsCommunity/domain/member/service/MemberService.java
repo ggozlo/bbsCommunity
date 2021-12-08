@@ -23,17 +23,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private final AuthorityRepository authorityRepository;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
+    public Long createAdmin(String username, String password, String email, String nickName) {
+
+        Member admin = new Member(username, passwordEncoder.encode(password), email, nickName);
+        memberRepository.persistMember(admin);
+        Authority adminRole = new Authority(admin, null, username);
+        authorityRepository.persistAuthority(adminRole);
+        return admin.getId();
+
+    }
+
     // 회원가입 서비스메서드
-    public Long join(MemberJoinDto memberDto) {
+    public Member join(MemberJoinDto memberDto) {
         try {
             Member member = modelMapper.map(memberDto, Member.class);
             member.setPassword(passwordEncoder.encode(member.getPassword()));
-            memberRepository.persistMember(member);
-            return member.getId();
+            Member joinMember = memberRepository.persistMember(member);
+            authorityRepository.persistAuthority(new Authority(joinMember, null, joinMember.getUsername()));
+            return joinMember;
         } catch (DataIntegrityViolationException e) {
             e.getMessage();
             throw new JoinFailureException("Ex.Member.JoinFail");
@@ -101,6 +113,7 @@ public class MemberService {
             if (exist) {
                 throw new DeleteFailureException("Ex.Member.DeleteFail");
             }
-
     }
+
+
 }

@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 @Data
 public class PostViewDto {
 
+    private Long authorId;
+
     private String title;
     private String authorNickname;
-    private String boardNickname;
+    private String boardName;
     private String content;
 
     private LocalDateTime createDate;
@@ -21,15 +23,14 @@ public class PostViewDto {
     private boolean isAuthor;
 
     public  PostViewDto(Post post) {
+        this.authorId = post.getMember().getId();
         this.title = post.getTitle();
         this.authorNickname = post.getMember().getNickname();
-        this.boardNickname = post.getBoard().getName();
+        this.boardName = post.getBoard().getName();
         this.content = post.getContent();
         this.createDate = post.getCreateDate();
         this.lastModifiedDate = post.getLastModifiedDate();
         this.views = post.getViews();
         this.isAuthor = false;
     }
-
-
 }

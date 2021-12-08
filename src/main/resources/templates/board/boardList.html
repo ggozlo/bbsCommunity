@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main" style="max-width: 1200px">
+        <h1 th:text="#{boardList}" class="my-5">board List</h1>
+
+
+    <div th:each="board : ${boardList}" class="border border-dark border-3 rounded m-3 p-2 ">
+        <a th:text="( ${board.name} + ' ' + #{boardName} )" class="h4" th:href="@{${board.address}}">Board Name</a>
+        <span class="float-end" th:text="${board.primeManager}">작성자</span>
+        <span class="float-end mx-2" >|</span>
+        <span class="float-end" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}">생성일</span>
+        <p th:text="${board.describe}" th:class="small">Describe</p>
+    </div>
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
+</body>
+</html>

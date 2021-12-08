@@ -13,6 +13,6 @@ public class PostWriteDto {
     private String title;
     private String content;
     private Long authorId;
-    private String boardName;
+    private String boardAddress;
     private Integer views;
 }

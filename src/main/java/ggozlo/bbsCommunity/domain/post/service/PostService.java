@@ -38,7 +38,7 @@ public class PostService {
     private final ModelMapper modelMapper;
 
     public Long write(PostWriteDto postDto) {
-        Board board = boardRepository.findById(postDto.getBoardName())
+        Board board = boardRepository.findById(postDto.getBoardAddress())
                 .orElseThrow(() -> new NotExistBoardException("Ex.Board.NotExist"));
         if (!board.isActivation()) {
             throw new BoardDisabledException("Ex.Board.Disabled");
@@ -72,8 +72,12 @@ public class PostService {
 
 
     @Transactional(readOnly = true)
-    public PostModifyFormDto modifyTarget(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundPostException("Ex.Post.NotFound"));
-        return modelMapper.map(post, PostModifyFormDto.class);
+    public PostModifyFormDto findModifyTarget(Long postId) {
+        return postRepository.findModifyPost(postId).orElseThrow(() -> new NotFoundPostException("Ex.Post.NotFound"));
     }
+
+    public void modifyPost(PostModifyFormDto modifyPost, Long postId) {
+        postRepository.updatePost(postId, modifyPost);
+    }
+
 }
