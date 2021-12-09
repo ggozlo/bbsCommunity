@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -56,6 +57,7 @@ public class PostJpaRepositoryImpl implements PostJpaRepository {
                 .update(qPost)
                 .set(qPost.title, modifyPost.getTitle())
                 .set(qPost.content, modifyPost.getContent())
+                .set(qPost.lastModifiedDate, LocalDateTime.now())
                 .where(qPost.id.eq(postId))
                 .execute();
     }

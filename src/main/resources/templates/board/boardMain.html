@@ -30,7 +30,7 @@
                     <a th:href="@{/board/{boardAddress}/{postId} (boardAddress=${boardAddress}, postId=${post.postId} )}"
                        th:text="${post.title}">글제목</a>
                 </td>
-                <td th:text="${#temporals.format(post.lastModifiedTime, 'MM.dd-hh:mm')}">작성일시</td>
+                <td th:text="${#temporals.format(post.lastModifiedTime, 'yy.MM.dd-hh:mm')}">작성일시</td>
             </tr>
         </tbody>
     </table>

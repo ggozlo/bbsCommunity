@@ -66,16 +66,19 @@ public class PostController {
     }
 
 
+    //
 
     @GetMapping("/{boardAddress}/{postId}/delete")
-    @PreAuthorize("isAuthenticated() and #member.nickname.contains(#member.username)")
+    @PreAuthorize("isAuthenticated() and  hasAnyRole(#boardAddress + '_Prime', #boardAddress + '_Minor', 'admin'," +
+            "@postService.findAuthor(#postId) )" )
     public String deleteCheck(@PathVariable String boardAddress, @PathVariable Long postId, String authorNickname,
                               @AuthenticationPrincipal Member member, Model model) {
 
         return "post/deleteCheck";
     }
     @PostMapping("/{boardAddress}/{postId}/delete")
-    @PreAuthorize("isAuthenticated() and #member.username.equals(#author)")
+    @PreAuthorize("isAuthenticated() and  hasAnyRole(#boardAddress + '_Prime', #boardAddress + '_Minor', 'admin'," +
+            "@postService.findAuthor(#postId) )" )
     public String deletePost(@PathVariable String boardAddress, @PathVariable Long postId, String author,
                              @AuthenticationPrincipal Member member) {
         postService.deletePost(postId);

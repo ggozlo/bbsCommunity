@@ -23,10 +23,9 @@
                     Login
                 </button>
 
-                <a href="/member/info">
                     <button type="button" class="btn btn-outline-light me-2" th:text="#{Member.Info}"
-                    sec:authorize="isAuthenticated()">회원정보</button>
-                </a>
+                    sec:authorize="isAuthenticated()" onclick="location.href='/member/info'">회원정보</button>
+
                 <button sec:authorize="isAnonymous()" type="button" onclick="location.href='/member/join'"
                         th:text="#{Member.Join}" class="btn btn-warning">회원가입</button>
                 <button sec:authorize="isAuthenticated()" type="button"

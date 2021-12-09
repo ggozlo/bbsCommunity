@@ -6,15 +6,18 @@
 
 <header th:replace="/fragment/header::header"></header>
 
-<div class="container main" style="max-width: 1200px">
+<div class="container main text-center" style="max-width: 1200px">
     <div style="padding-top: 50px">
         <h1 th:text="#{Message.Post.DeleteCheck}">안내문</h1>
-        <div th:text="#{Message.Post.DeleteCheckDescribe}" /> <br/>
-        <a th:href="@{/board/{boardName}/{postId}(boardName=${boardAddress}, postId=${postId})}"><button>취소</button></a>
+        <div class="m-2" th:text="#{Message.Post.DeleteCheckDescribe}" />
 
-        <form method="post" th:action="@{/board/{board}/{postId}/delete(board=${board}, postId=${postId})}">
-            <input type="hidden" th:value="${author}" name="author">
-            <button type="submit">삭제하기</button>
+        <form method="post"  th:action="@{/board/{board}/{postId}/delete(board=${boardAddress}, postId=${postId})}">
+
+            <button class="btn btn-light m-4" type="button"
+                    th:onclick="'location.href=\'' + @{/board/{boardName}/{postId}(boardName=${boardAddress}, postId=${postId})} + '\''">
+                삭제취소</button>
+
+            <button class="btn btn-danger m-4" type="submit">삭제하기</button>
         </form>
     </div>
 </div>
