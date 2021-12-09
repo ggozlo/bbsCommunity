@@ -17,16 +17,20 @@
 
             <div class="text-end">
 
-                <a href="/login" sec:authorize="isAnonymous()">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                </a>
+
+                <button type="button" class="btn btn-outline-light me-2" sec:authorize="isAnonymous()"
+                        th:onclick="'location.href=\'' + @{/login (jump=${#httpServletRequest.getRequestURI()})} + '\''">
+                    Login
+                </button>
+
                 <a href="/member/info">
                     <button type="button" class="btn btn-outline-light me-2" th:text="#{Member.Info}"
                     sec:authorize="isAuthenticated()">회원정보</button>
                 </a>
                 <button sec:authorize="isAnonymous()" type="button" onclick="location.href='/member/join'"
                         th:text="#{Member.Join}" class="btn btn-warning">회원가입</button>
-                <button sec:authorize="isAuthenticated()" type="button" onclick="location.href='/logout'"
+                <button sec:authorize="isAuthenticated()" type="button"
+                        th:onclick="'location.href=\'' + @{/logout (jump=${#httpServletRequest.getRequestURI()})} + '\''"
                         class="btn btn-warning">로그아웃</button>
 
             </div>

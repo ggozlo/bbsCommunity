@@ -2,10 +2,12 @@ package ggozlo.bbsCommunity.global;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,11 @@ public class HomeController {
     @RequestMapping(value = "/login")
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "exception", required = false) String exception,
+                        @RequestParam(value = "jump", required = false) String jump,
                         Model model) {
+
+
+        model.addAttribute("jump", jump);
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
         return "/common/login";
@@ -49,9 +55,8 @@ public class HomeController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
             // 인증객체가 존재한다면 로그아웃 핸들러를 생성해 로그아웃처리
         }
-        return "redirect:/login";
+        return "redirect:/login"; // 작동안함
     }
-
 
     @GetMapping("/test")
     @PreAuthorize("isAuthenticated()")

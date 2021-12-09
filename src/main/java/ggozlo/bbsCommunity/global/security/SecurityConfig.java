@@ -3,6 +3,7 @@ package ggozlo.bbsCommunity.global.security;
 import ggozlo.bbsCommunity.global.security.handler.FormAccessDeniedHandler;
 import ggozlo.bbsCommunity.global.security.handler.FormLoginFailureHandler;
 import ggozlo.bbsCommunity.global.security.handler.FormLoginSuccessHandler;
+import ggozlo.bbsCommunity.global.security.handler.FormLogoutSuccessHandler;
 import ggozlo.bbsCommunity.global.security.provider.FormAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and()
                 .logout()
-                .logoutSuccessUrl("/")
+                .logoutSuccessHandler(formLogoutSuccessHandler())
             .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
@@ -74,6 +75,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AccessDeniedHandler accessDeniedHandler() {
         FormAccessDeniedHandler formAccessDeniedHandler = new FormAccessDeniedHandler("/denied");
         return formAccessDeniedHandler;
+    }
+
+    @Bean // 로그아웃 성공 핸들러
+    public FormLogoutSuccessHandler formLogoutSuccessHandler() {
+        return new FormLogoutSuccessHandler();
     }
 
     @Bean // 인증 성공 핸들러

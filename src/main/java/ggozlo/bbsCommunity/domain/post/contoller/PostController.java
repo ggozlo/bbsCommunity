@@ -65,7 +65,7 @@ public class PostController {
         return "post/view";
     }
 
-    /// 수정필요!
+
 
     @GetMapping("/{boardAddress}/{postId}/delete")
     @PreAuthorize("isAuthenticated() and #member.nickname.contains(#member.username)")

@@ -29,12 +29,20 @@ public class FormLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         // 인증요청을 받기 전에 저장된 요청정보
 
+        String jumpUrl = request.getParameter("jump");
+
         if (savedRequest != null) { // 요청정보가 존재한다면 해당 요청정보로 이동
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }
-        else { // 요청정보가 없다면 저장된 기본 url 로 이동함
-            redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
+        else { // 요청정보가 없다면 로그인창 이전 url 또는 저장된 기본 url 로 이동함
+
+            if (jumpUrl != null) {
+                redirectStrategy.sendRedirect(request, response, jumpUrl);
+            } else {
+                redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
+            }
+
         }
     }
 }
