@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragment/head::head(title = ${'BBSCommunity'})"></head>
+<head th:replace="/fragment/head::head(title=${'BBSCommunity'})"></head>
 
 <body>
 
@@ -9,7 +9,7 @@
 <div class="container main text-center" style="max-width: 1200px">
     <div style="padding-top: 50px">
         <h1 th:text="#{Message.Post.DeleteCheck}">안내문</h1>
-        <div class="m-2" th:text="#{Message.Post.DeleteCheckDescribe}" />
+        <div class="m-2" th:text="#{Message.Post.DeleteCheckDescribe}"/>
 
         <form method="post"  th:action="@{/board/{board}/{postId}/delete(board=${boardAddress}, postId=${postId})}">
 

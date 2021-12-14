@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+<head th:replace="/fragment/head::head(title='BBSCommunity')"></head>
 
 <body>
 
 <header th:replace="/fragment/header::header"></header>
 
-<div class="container main text-center" style=" max-width: 1200px">
+<div class="container main text-center" style="max-width: 1200px">
 
 
         <div class="w-100 text-center m-3" style="height: 10vh">
@@ -36,7 +36,7 @@
             <td th:text="${post.authorNickname}">작성자</td>
             <td th:text="${post.views}">조회수</td>
             <td>
-                <a th:href="@{/board/{boardAddress}/{postId} (boardAddress=${post.boardAddress}, postId=${post.postId} )}"
+                <a th:href="@{/board/{boardAddress}/{postId}(boardAddress=${post.boardAddress}, postId=${post.postId})}"
                    th:text="${post.title}">글제목</a>
             </td>
             <td th:text="${#temporals.format(post.lastModifiedTime, 'yy.MM.dd-hh:mm')}">작성일시</td>
@@ -45,10 +45,10 @@
     </table>
 
 
-    <div th:if="${!postPage.isEmpty()}" >
+    <div th:if="${!postPage.isEmpty()}">
         <ul class="pagination justify-content-center"
             th:with=" start = ${T(Math).floor(postPage.number/10)*10 +1} ,
-                         last=(${start + 9 < postPage.totalPages ? start + 9 : postPage.totalPages})">
+                         last=(${start+9 < postPage.totalPages ? start + 9 : postPage.totalPages})">
 
             <li class="page-item" th:if="${!postPage.first}">
                 <a class="page-link" th:href="@{/member/post (page=1)}" aria-label="First">
@@ -57,7 +57,7 @@
             </li>
 
             <li class="page-item" th:if="${!postPage.first}">
-                <a class="page-link" th:href="@{/member/post (page=${ postPage.number })} " aria-label="Previous">
+                <a class="page-link" th:href="@{/member/post (page=${ postPage.number })}" aria-label="Previous">
                     <span aria-hidden="true">&lt;</span>
                 </a>
             </li>
