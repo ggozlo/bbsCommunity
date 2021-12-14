@@ -37,16 +37,6 @@ public class Initializer {
         PostWriteDto noticePostDto = new PostWriteDto("공지 제목입니다.", "공지사항 본문입니다.", adminId, noticeBoard,0);
         postService.write(noticePostDto);
 
-
-        MemberJoinDto testerDto = new MemberJoinDto("Tester", "test123", "test@test.com", "테스트유저");
-        Long testerId = memberService.join(testerDto).getId();
-        for (int i = 0; i < 22; i++) {
-            BoardCreateDto dummy = new BoardCreateDto("dummy" + i, "더미게시판" + i, "테스트용 게시판 입니다", testerId);
-            boardService.createBoard(dummy);
-
-            postService.write(new PostWriteDto("테스트 글제목" + i, "테스트 글 입니다" + i, testerId, noticeBoard, 0));
-        }
-
         log.debug("Success Initialize!");
     }
 }
