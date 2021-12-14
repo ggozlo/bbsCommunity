@@ -63,7 +63,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public String findAuthor(Long postId) {
         String author = postRepository.findAuthor(postId);
-        if (author == null)  throw new NotFoundMemberException("Ex.Member.NotFound");
+        if (author == null){   throw new NotFoundMemberException("Ex.Member.NotFound");}
         return author;
     }
 
