@@ -40,7 +40,7 @@ public class MemberController {
         if (principal != null) {
             return "/home";
         }
-        return "/member/joinForm";
+        return "member/joinForm";
     }
 
     // permit All
@@ -76,7 +76,7 @@ public class MemberController {
     @PreAuthorize("isAuthenticated()")
     public String editForm(@AuthenticationPrincipal Member member, Model model) {
         model.addAttribute(member);
-        return "/member/editForm";
+        return "member/editForm";
     }
 
     // 로그인 회원 본인만 접근가능한 사용자정보 변경 메서드들
@@ -121,7 +121,7 @@ public class MemberController {
     public String writePostList(Model model, @AuthenticationPrincipal Member member, @PageableDefault Pageable pageable) {
         Page<MemberPostList> postPage =memberService.findPostList(member.getId(), pageable);
         model.addAttribute("postPage", postPage);
-        return "/member/postList";
+        return "member/postList";
     }
 
     @GetMapping("/comment")
@@ -129,7 +129,7 @@ public class MemberController {
     public String writeCommentList(Model model, @AuthenticationPrincipal Member member, @PageableDefault Pageable pageable) {
         Page<CommentListDto> commentPage =memberService.findCommentList(member.getId(), pageable);
         model.addAttribute("commentPage", commentPage);
-        return "/member/commentList";
+        return "member/commentList";
     }
 
     @GetMapping("/memberList")
@@ -137,6 +137,6 @@ public class MemberController {
     public String memberList(Model model) {
         List<MemberInfoDto> memberList = memberService.memberList();
         model.addAttribute("memberList", memberList);
-        return "/member/memberList";
+        return "member/memberList";
     }
 }

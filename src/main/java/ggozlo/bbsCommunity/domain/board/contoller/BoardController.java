@@ -75,7 +75,7 @@ public class BoardController {
 
         List<BoardDto> boardDtoList = boardService.boardList();
         model.addAttribute("boardList", boardDtoList);
-        return "/board/boardList";
+        return "board/boardList";
     }
 
     @GetMapping("/search")
@@ -83,7 +83,7 @@ public class BoardController {
 
         List<BoardDto> boardDtoList = boardService.boardSearch(parameter);
         model.addAttribute("boardList", boardDtoList);
-        return "/board/boardList";
+        return "board/boardList";
     }
 
 
@@ -108,7 +108,7 @@ public class BoardController {
     @GetMapping("/create")
     @PreAuthorize("isAuthenticated()")
     public String boardCreateForm(@ModelAttribute("boardForm") BoardCreateDto boardCreateDto) {
-        return "/board/createForm";
+        return "board/createForm";
     }
 
     @PostMapping("/create")
@@ -141,7 +141,7 @@ public class BoardController {
     public String boardModifyForm(@PathVariable String boardAddress, Model model) {
         BoardModifyDto modifyForm = boardService.modifyBoardTarget(boardAddress);
         model.addAttribute("modifyForm", modifyForm);
-        return "/board/modifyForm";
+        return "board/modifyForm";
     }
 
     @PostMapping("/{boardAddress}/modify")
@@ -155,7 +155,7 @@ public class BoardController {
     @PreAuthorize("hasRole('admin')")
     public String boardLock(@PathVariable String boardAddress, Model model) {
         model.addAttribute("isActive", boardRepository.isActiveBoard(boardAddress));
-        return "/board/lockCheck";
+        return "board/lockCheck";
     }
 
     @PostMapping("/{boardAddress}/lock")
@@ -170,28 +170,28 @@ public class BoardController {
     }
 
     @GetMapping("/{boardAddress}/addManager")
-    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardRepository+'_Prime')")
+    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardAddress+'_Prime')")
     public String addMinorManager(@PathVariable String boardAddress, @AuthenticationPrincipal Member member) {
-        return "/board/addManagerForm";
+        return "board/addManagerForm";
     }
 
     @PostMapping("/{boardAddress}/addManager")
-    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardRepository+'_Prime')")
+    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardAddress+'_Prime')")
     public String addManagerProc(@PathVariable String boardAddress, String nickname) {
         boardService.addManager(nickname, boardAddress);
         return "redirect:/board/{boardAddress}";
     }
 
     @GetMapping("/{boardAddress}/deleteManager")
-    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardRepository+'_Prime')")
+    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardAddress+'_Prime')")
     public String deleteMinorManager(@PathVariable String boardAddress, Model model) {
         List<MemberInfoDto> memberList = memberService.findAllMinorManager(boardAddress);
         model.addAttribute("memberList", memberList);
-        return "/board/deleteManagerForm";
+        return "board/deleteManagerForm";
     }
 
     @PostMapping("/{boardAddress}/deleteManager")
-    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardRepository+'_Prime')")
+    @PreAuthorize("isAuthenticated() and hasAnyRole('admin', #boardAddress+'_Prime')")
     public String deleteMinorManagerProc(@PathVariable String boardAddress, Model model, Long userId) {
         boardService.deleteManager(userId, boardAddress);
 

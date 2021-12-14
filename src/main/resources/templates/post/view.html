@@ -66,9 +66,9 @@
               th:text="'작성일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">작성일시</span>
         <span class="float-end" th:if="${!viewPost.createDate.equals(viewPost.lastModifiedDate)}"
               th:text="'수정일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">수정일시</span>
-        <p style="min-height: 40vh" class="border-top border-bottom border-1 border-dark" th:utext="${viewPost.content}">
+        <div style="min-height: 40vh" class="border-top border-bottom border-1 border-dark" th:utext="${viewPost.content}">
             본문
-        </p>
+        </div>
 
     </div>
 
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <form sec:authorize="isAuthenticated()" th:action="@{/comment/{boardAddress}/{postId}/write(boardAddress=${boardAddress},postId=${postId})}" method="post" class="input-group input-group-lg">
+    <form sec:authorize="isAuthenticated()" th:class="m-1" th:action="@{/comment/{boardAddress}/{postId}/write(boardAddress=${boardAddress},postId=${postId})}" method="post" class="input-group input-group-lg">
         <input placeholder="댓글내용을 작성하세요" type="text" class="form-control" name="comment"/>
         <button class="btn btn-outline-primary">댓글 작성</button>
     </form>
@@ -103,7 +103,18 @@
 
 </div>
 
-<footer th:replace="/fragment/footer::footer"></footer>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+        </a>
+        <p class="text-muted">
+            &copy; 2021 양한범 <br/>
+            깃허브 주소: <a href="https://github.com/ggozlo/bbsCommunity">https://github.com/ggozlo/bbsCommunity</a>
+        </p>
+    </div>
+
+</footer>
 
 </body>
 </html>

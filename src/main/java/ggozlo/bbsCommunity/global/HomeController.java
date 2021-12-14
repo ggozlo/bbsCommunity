@@ -37,18 +37,18 @@ public class HomeController {
                         @RequestParam(value = "jump", required = false) String jump,
                         Model model, Principal principal) {
         if (principal != null) {
-            return "/home";
+            return "home";
         }
         model.addAttribute("jump", jump);
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-        return "/common/login";
+        return "common/login";
     }
 
     @RequestMapping("/denied") //
     public String accessDeny(@RequestParam(required = false) String message, Model model) {
         model.addAttribute("message", message);
-        return "/common/denied";
+        return "common/denied";
     }
 
     @GetMapping("/logout") // get 방식의 로그아웃 직접 구현
@@ -69,7 +69,7 @@ public class HomeController {
         String requestURI = request.getRequestURI();
         log.info("requestURI = {}", requestURI);
 
-        return "/home";
+        return "home";
 
     }
 }
