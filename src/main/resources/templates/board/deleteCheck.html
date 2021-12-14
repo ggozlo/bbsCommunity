@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = ${'BBSCommunity'})"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main text-center" style="max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1 th:text="#{Message.Post.DeleteCheck}">안내문</h1>
+        <div class="m-2" th:text="#{Message.Board.DeleteCheckDescribe}" />
+
+        <form method="post"  th:action="@{/board/{boardAddress}/delete(boardAddress=${boardAddress})}">
+
+            <button class="btn btn-light m-4" type="button"
+                    th:onclick="'location.href=\'' + @{/board/{boardAddress}(boardAddress=${boardAddress})} + '\''">
+                삭제취소</button>
+
+            <button class="btn btn-danger m-4" type="submit">삭제하기</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
+</body>
+</html>

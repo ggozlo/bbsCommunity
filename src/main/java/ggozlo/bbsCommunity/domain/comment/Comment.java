@@ -2,6 +2,7 @@ package ggozlo.bbsCommunity.domain.comment;
 
 import ggozlo.bbsCommunity.domain.member.Member;
 import ggozlo.bbsCommunity.domain.post.Post;
+import ggozlo.bbsCommunity.global.entity.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "member", "post"})
 @Getter
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator = "commentSeq", strategy = GenerationType.SEQUENCE)

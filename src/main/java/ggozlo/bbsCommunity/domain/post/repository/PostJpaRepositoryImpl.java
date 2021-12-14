@@ -1,13 +1,18 @@
 package ggozlo.bbsCommunity.domain.post.repository;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import ggozlo.bbsCommunity.domain.board.QBoard;
 import ggozlo.bbsCommunity.domain.member.QMember;
 import ggozlo.bbsCommunity.domain.post.Post;
 import ggozlo.bbsCommunity.domain.post.QPost;
-import ggozlo.bbsCommunity.global.dto.post.PostModifyFormDto;
-import ggozlo.bbsCommunity.global.dto.post.QPostModifyFormDto;
+import ggozlo.bbsCommunity.global.dto.member.MemberPostList;
+import ggozlo.bbsCommunity.global.dto.member.QMemberPostList;
+import ggozlo.bbsCommunity.global.dto.post.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -73,14 +78,28 @@ public class PostJpaRepositoryImpl implements PostJpaRepository {
                 .fetchOne());
     }
 
-//    @Transactional(readOnly = true)
-//    public String findAuthor(Long postId) {
-//        return queryFactory
-//                .select(qPost.member.username)
-//                .from(qPost)
-//                .join(qPost.member)
-//                .where(qPost.id.eq(postId))
-//                .fetchOne();
-//    }
+    @Override
+    public Page<MemberPostList> memberPostPage(Long memberId, Pageable pageable) {
+        QueryResults<MemberPostList> memberPostPage = queryFactory.
+                select(new QMemberPostList(
+                        qPost.id.as("postId"),
+                        qPost.title,
+                        qPost.member.nickname.as("authorNickname"),
+                        qPost.board.address.as("boardAddress"),
+                        qPost.board.name.as("boardName"),
+                        qPost.views,
+                        qPost.lastModifiedDate))
+                .from(qPost)
+                .join(qPost.board)
+                .join(qPost.member)
+                .where(qPost.member.id.eq(memberId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qPost.id.desc())
+                .fetchResults();
+
+        return new PageImpl<MemberPostList>(memberPostPage.getResults(), pageable, memberPostPage.getTotal());
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package ggozlo.bbsCommunity.domain.post;
 
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
 import ggozlo.bbsCommunity.domain.board.Board;
 import ggozlo.bbsCommunity.domain.comment.Comment;
 import ggozlo.bbsCommunity.domain.member.Member;
@@ -35,6 +37,7 @@ public class Post extends BaseTimeEntity {
     private String title;
 
     @Lob
+    @QueryType(PropertyType.STRING)
     private String content;
 
 

@@ -40,22 +40,19 @@ public class PostService {
     public Long write(PostWriteDto postDto) {
         Board board = boardRepository.findById(postDto.getBoardAddress())
                 .orElseThrow(() -> new NotExistBoardException("Ex.Board.NotExist"));
-        if (!board.isActivation()) {
-            throw new BoardDisabledException("Ex.Board.Disabled");
-        }
         Member member = memberRepository.findById(postDto.getAuthorId())
                 .orElseThrow(() -> new NotFoundMemberException("Ex.Member.NotFoundMember"));
 
         Post post = modelMapper.map(postDto, Post.class);
         post.setBoard(board);
         post.setMember(member);
+
         return postRepository.persistPost(post);
     }
 
     public PostViewDto view(Long postId) {
         postRepository.incrementViews(postId);
         Post post = postRepository.viewPost(postId).orElseThrow(() -> new NotFoundPostException("Ex.Post.NotFound"));
-        if (!post.getBoard().isActivation()) throw new BoardDisabledException("Ex.Board.Disabled");
         return new PostViewDto(post);
     }
 

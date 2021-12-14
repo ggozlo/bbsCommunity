@@ -10,6 +10,15 @@
         <h1 th:text="#{boardList}" class="my-5">board List</h1>
 
 
+        <form th:action="@{/board/search}" method="get">
+            <div class="m-2 input-group">
+                <input  class="form-control" type="text" name="parameter" id="parameter" placeholder="검색">
+                <button type="submit" class="btn btn-outline-primary">검색</button>
+            </div>
+        </form>
+
+
+
     <div th:each="board : ${boardList}" class="border border-dark border-3 rounded m-3 p-2 ">
         <a th:text="( ${board.name} + ' ' + #{boardName} )" class="h4" th:href="@{${board.address}}">Board Name</a>
         <span class="float-end" th:text="${board.primeManager}">작성자</span>

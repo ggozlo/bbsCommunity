@@ -4,12 +4,14 @@ import com.querydsl.jpa.impl.JPAInsertClause;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import ggozlo.bbsCommunity.domain.member.Member;
 import ggozlo.bbsCommunity.domain.member.QMember;
+import ggozlo.bbsCommunity.domain.member.authority.QAuthority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class MemberJpaRepositoryImpl implements MemberJpaRepository{
 
     private final JPAQueryFactory queryFactory;
     private final QMember qMember = QMember.member;
+    private final QAuthority qAuthority = QAuthority.authority;
 
     @Override
     public Member persistMember(Member member) {
@@ -66,5 +69,13 @@ public class MemberJpaRepositoryImpl implements MemberJpaRepository{
                 .execute();
     }
 
-
+    @Override
+    public List<Member> findMinorManager(String boardAddress) {
+        List<Member> memberList = queryFactory
+                .select(qMember)
+                .from(qMember)
+                .where(qMember.authorityList.any().role.eq(boardAddress + "_Minor"))
+                .fetch();
+        return memberList;
+    }
 }

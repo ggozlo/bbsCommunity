@@ -6,37 +6,45 @@
 
     <header th:replace="/fragment/header::header"></header>
 
-    <div class="container main" style="max-width: 1200px">
-        <h1>MemberDetails</h1>
-        <h4 th:text="${member.username}"></h4>
-        <h4 th:text="${member.email}"></h4>
-        <h4 th:text="${member.nickname}"></h4>
-        <h4 th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm:ss')}"></h4>
-        <h4 th:text="${#temporals.format(member.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+    <div class="container main text-center" style="max-width: 1200px">
+
+        <div class="w-100 text-center m-3" style="height: 10vh">
+            <span class="d-inline-block  w-25 border border-3 border-success fs-3 text-success">회원 정보</span>
+            <span class="d-inline-block  w-25 border border-3 border-secondary fs-3 text-secondary"
+                  onclick="location.href='/member/post'">게시글 조회</span>
+            <span class="d-inline-block  w-25 border border-3 border-secondary fs-3 text-secondary"
+                  onclick="location.href='/member/comment'">댓글 조회</span>
+        </div>
+
+        <table class="fs-5 table">
+                <tr>
+                    <th>사용자 아이디</th>
+                    <td th:text="${member.username}">아이디</td>
+                </tr>
+                <tr>
+                    <th>사용자 이메일</th>
+                    <td th:text="${member.email}">이메일</td>
+                </tr>
+                <tr>
+                    <th>사용자 별명</th>
+                    <td th:text="${member.nickname}">별명</td>
+                </tr>
+                <tr>
+                    <th>계정 생성일시</th>
+                    <td th:text="${member.createDate}">생성일시</td>
+                </tr>
+                <tr>
+                    <th>계정 마지막 수정일시</th>
+                    <td th:text="${member.lastModifiedDate}">수정일시</td>
+                </tr>
+        </table>
+
+        <button class="float-end btn btn-warning" onclick="location.href='/member/edit'">
+            사용자 정보 수정
+        </button>
 
 
-        <form method="post" th:action="@{/member/edit/username}">
-            <input type="text" name="newUsername">
-            <button type="submit">아이디 변경</button>
-        </form>
-        <br/>
-        <form method="post" th:action="@{/member/edit/email}">
-            <input type="text" name="newEmail">
-            <button type="submit">이메일 변경</button>
-        </form>
-        <br/>
-        <form method="post" th:action="@{/member/edit/password}">
-            <input type="text" name="newPassword">
-            <button type="submit">패스워드 변경</button>
-        </form>
-        <br/>
-        <form method="post" th:action="@{/member/edit/nickname}">
-            <input type="text" name="newNickname">
-            <button type="submit">닉네임 변경</button>
-        </form>
-        <form method="post" th:action="@{/member/delete}">
-            <button type="submit">계정 삭제</button>
-        </form>
+
     </div>
 
     <footer th:replace="/fragment/footer::footer"></footer>

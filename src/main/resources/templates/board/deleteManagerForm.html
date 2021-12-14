@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main text-center" style=" max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1>회원조회</h1>
+    </div>
+    <b th:text="|전체 회원수 : ${memberList.size()}|">전체 회원수</b>
+    <table class="table">
+
+        <thead>
+        <tr>
+            <th>회원 별명</th>
+            <th>회원 아이디</th>
+            <th>회원 가입일</th>
+            <th>회원 수정일</th>
+            <th>선택</th>
+        </tr>
+        </thead>
+        <tr th:each="member : ${memberList}">
+            <td th:text="${member.nickname}">별명</td>
+            <td th:text="${member.username}">아이디</td>
+            <td th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd hh.mm.ss')}">가입일</td>
+            <td th:text="${#temporals.format(member.lastModifiedDate, 'yyyy-MM-dd hh.mm.ss')}">수정일</td>
+            <td>
+                <form method="post" th:action="@{/board/{boardAddress}/deleteManager(boardAddress=${boardAddress}, userId=${member.getId()})}">
+                    <button type="submit" class="btn btn-danger">
+                        매니저 박탈
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tbody>
+
+        </tbody>
+
+    </table>
+</div>
+
+
+
+
+<footer th:replace="/fragment/footer::footer"></footer>
+</body>
+
+</html>

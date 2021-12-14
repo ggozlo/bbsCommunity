@@ -7,12 +7,36 @@
 <header th:replace="/fragment/header::header"></header>
 
 <div class="container main" style="max-width: 1200px">
-    <div style="padding-top: 50px">
-        회원가입화면
-        <form th:object="${memberJoinForm}">
-            <input th:field="*{username}">
-        </form>
+    <div class="m-3">
+        <h1>회원가입화면</h1>
     </div>
+        <form th:object="${memberJoinForm}" method="post" th:action="@{/member/join}">
+
+            <div class="m-2">
+                <label class="form-label" th:for="*{username}">사용자 아이디</label>
+                <input type="text" class="form-control" th:field="*{username}" placeholder="사용할 아이디를 입력하시오">
+            </div>
+
+            <div class="m-2">
+                <label class="form-label" th:for="*{password}">패스워드</label>
+                <input type="password" class="form-control" th:field="*{password}" placeholder="사용할 패스워드를 입력하시오">
+            </div>
+
+            <div class="m-2">
+                <label class="form-label" th:for="*{nickname}">별명</label>
+                <input type="text" class="form-control" th:field="*{nickname}" placeholder="사용할 별명을 입력하시오">
+            </div>
+
+            <div class="m-2">
+                <label class="form-label" th:for="*{email}">이메일</label>
+                <input type="text" class="form-control" th:field="*{email}" placeholder="사용할 이메일을 입력하시오">
+            </div>
+
+            <button class="float-end btn btn-primary m-2" type="submit">확인</button>
+            <button class="float-end btn btn-secondary m-2" type="reset">초기화</button>
+
+        </form>
+
 </div>
 
 <footer th:replace="/fragment/footer::footer"></footer>

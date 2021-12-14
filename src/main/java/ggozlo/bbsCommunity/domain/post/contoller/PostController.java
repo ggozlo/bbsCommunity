@@ -1,9 +1,12 @@
 package ggozlo.bbsCommunity.domain.post.contoller;
 
 import ggozlo.bbsCommunity.domain.board.repository.BoardRepository;
+import ggozlo.bbsCommunity.domain.board.service.BoardService;
+import ggozlo.bbsCommunity.domain.comment.service.CommentService;
 import ggozlo.bbsCommunity.domain.member.Member;
 import ggozlo.bbsCommunity.domain.member.authority.Authority;
 import ggozlo.bbsCommunity.domain.post.service.PostService;
+import ggozlo.bbsCommunity.global.dto.comment.CommentDto;
 import ggozlo.bbsCommunity.global.dto.post.PostModifyFormDto;
 import ggozlo.bbsCommunity.global.dto.post.PostViewDto;
 import ggozlo.bbsCommunity.global.dto.post.PostWriteDto;
@@ -17,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,7 +31,9 @@ import java.util.Optional;
 public class PostController {
 
     private final PostService postService;
+    private final BoardService boardService;
     private final BoardRepository boardRepository;
+    private final CommentService commentService;
 
     @Value("${admin.username}")
     private String adminUsername;
@@ -35,7 +41,7 @@ public class PostController {
     @GetMapping("/{boardAddress}/write")
     @PreAuthorize("isAuthenticated()")
     public String writeForm(@PathVariable String boardAddress, @ModelAttribute("PostForm") PostWriteDto postDto, Model model) {
-
+        boardService.checkBoardActivated(boardAddress);
         model.addAttribute("boardName", boardRepository.findBoardNameByAddress(boardAddress));
         return "post/writeForm";
     }
@@ -44,6 +50,7 @@ public class PostController {
     @PreAuthorize("isAuthenticated()")
     public String writeProc(@PathVariable String boardAddress, RedirectAttributes redirect,
                         @AuthenticationPrincipal(expression = "id") Long authorId, PostWriteDto postDto) {
+        boardService.checkBoardActivated(boardAddress);
         postDto.setBoardAddress(boardAddress);
         postDto.setAuthorId(authorId);
         postDto.setViews(0);
@@ -55,11 +62,17 @@ public class PostController {
     @GetMapping("/{boardAddress}/{postId}")
     public String view(@PathVariable String boardAddress, @PathVariable Long postId, Model model,
                        @AuthenticationPrincipal Member member) {
+        boolean isActive = boardService.checkBoardActivated(boardAddress);
         PostViewDto viewDto = postService.view(postId);
 
         if (member != null) {
             viewDto.setAuthor(checkAuth(boardAddress, member, viewDto.getAuthorId()));
         }
+
+        List<CommentDto> commentList = commentService.postComment(postId, (member==null)? "" : member.getNickname());
+
+        model.addAttribute("commentList", commentList);
+        model.addAttribute("isActive", isActive);
         model.addAttribute("viewPost", viewDto);
 
         return "post/view";
@@ -73,7 +86,6 @@ public class PostController {
             "@postService.findAuthor(#postId) )" )
     public String deleteCheck(@PathVariable String boardAddress, @PathVariable Long postId, String authorNickname,
                               @AuthenticationPrincipal Member member, Model model) {
-
         return "post/deleteCheck";
     }
     @PostMapping("/{boardAddress}/{postId}/delete")
@@ -81,6 +93,7 @@ public class PostController {
             "@postService.findAuthor(#postId) )" )
     public String deletePost(@PathVariable String boardAddress, @PathVariable Long postId, String author,
                              @AuthenticationPrincipal Member member) {
+        boardService.checkBoardActivated(boardAddress);
         postService.deletePost(postId);
         return "redirect:/board/{boardAddress}";
     }
@@ -92,7 +105,7 @@ public class PostController {
     @PreAuthorize("isAuthenticated() and  hasAnyRole(#boardAddress + '_Prime', #boardAddress + '_Minor', 'admin'," +
             "@postService.findAuthor(#postId) )" )
     public String modifyForm(@PathVariable String boardAddress, @PathVariable Long postId, Model model) {
-
+        boardService.checkBoardActivated(boardAddress);
         PostModifyFormDto post = postService.findModifyTarget(postId);
         model.addAttribute("modifyTarget", post);
         return "post/modifyForm";
@@ -103,6 +116,7 @@ public class PostController {
     @PreAuthorize("isAuthenticated() and  hasAnyRole(#boardAddress + '_Prime', #boardAddress + '_Minor', 'admin'," +
             "@postService.findAuthor(#postId) )" )
     public String modifyPost(@PathVariable String boardAddress, @PathVariable Long postId, PostModifyFormDto postModifyDto) {
+        boardService.checkBoardActivated(boardAddress);
         postService.modifyPost(postModifyDto, postId);
         return "redirect:/board/{boardAddress}/{postId}";
     }
@@ -113,8 +127,8 @@ public class PostController {
         if (member.getId().equals(authorId)) {
             return true;
         } else {
-            String primeBoardAuth = "Role_" + boardAddress + "_Prime";
-            String minorBoardAuth = "Role_" + boardAddress + "_Minor";
+            String primeBoardAuth = boardAddress + "_Prime";
+            String minorBoardAuth = boardAddress + "_Minor";
 
             Optional<Authority> auth = member.getAuthorityList().stream().filter(authority -> {
                 String role = authority.getRole();

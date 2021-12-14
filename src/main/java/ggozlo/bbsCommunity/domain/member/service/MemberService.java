@@ -1,21 +1,30 @@
 package ggozlo.bbsCommunity.domain.member.service;
 
+import ggozlo.bbsCommunity.domain.comment.repository.CommentRepository;
 import ggozlo.bbsCommunity.domain.member.authority.Authority;
 import ggozlo.bbsCommunity.domain.member.Member;
 import ggozlo.bbsCommunity.domain.member.authority.AuthorityRepository;
 import ggozlo.bbsCommunity.domain.member.repository.MemberRepository;
+import ggozlo.bbsCommunity.domain.post.repository.PostRepository;
+import ggozlo.bbsCommunity.global.dto.comment.CommentListDto;
 import ggozlo.bbsCommunity.global.dto.member.MemberInfoDto;
 import ggozlo.bbsCommunity.global.dto.member.MemberJoinDto;
+import ggozlo.bbsCommunity.global.dto.member.MemberPostList;
+import ggozlo.bbsCommunity.global.dto.post.PostListDto;
 import ggozlo.bbsCommunity.global.exception.member.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,6 +36,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     public Long createAdmin(String username, String password, String email, String nickName) {
 
@@ -116,4 +127,28 @@ public class MemberService {
     }
 
 
+    public Page<MemberPostList> findPostList(Long memberId, Pageable pageable) {
+        Page<MemberPostList> postList = postRepository.memberPostPage(memberId, pageable);
+        return postList;
+    }
+
+    public Page<CommentListDto> findCommentList(Long memberId, Pageable pageable) {
+        Page<CommentListDto> commentPage = commentRepository.memberCommentPage(memberId, pageable);
+        return commentPage;
+    }
+
+    public List<MemberInfoDto> memberList() {
+        List<Member> memberList = memberRepository.findAll();
+        List<MemberInfoDto> memberDtoList = memberList.stream()
+                .map(member -> modelMapper.map(member, MemberInfoDto.class))
+                .collect(Collectors.toList());
+        return memberDtoList;
+    }
+
+    public List<MemberInfoDto> findAllMinorManager(String boardAddress) {
+        List<Member> memberList = memberRepository.findMinorManager(boardAddress);
+        return memberList.stream()
+                .map(member -> modelMapper.map(member, MemberInfoDto.class))
+                .collect(Collectors.toList());
+    }
 }

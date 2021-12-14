@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main text-center" style=" max-width: 80vh">
+
+    <div style="padding-top: 50px">
+        <h1>게시판 생성</h1>
+    </div>
+
+    <form th:object="${boardForm}" th:action="@{/board/create}" method="post" class="overflow-auto"  >
+
+
+        <div class="form-floating m-2" >
+            <input type="text" class="form-control" th:field="*{address}"  placeholder="address">
+            <label th:for="*{address}">게시판 주소</label>
+            <div class="form-text">생성할 게시판 url 주소가 됩니다. 최대 30자 </div>
+        </div>
+
+        <div class="form-floating m-2">
+            <input type="text" class="form-control"  th:field="*{name}"  placeholder="address">
+            <label th:for="*{name}">게시판 이름</label>
+            <div class="form-text">사이트 내에 표시될 게시판 이름입니다. 이름에 게시판을 포함하지 마세요 최대 50자</div>
+        </div>
+
+        <div class="form-floating m-2">
+            <textarea type="text" class="form-control" th:field="*{describe}" style="height: 40vh" placeholder="address" />
+            <label th:for="*{describe}">생성할 게시판에 대한 간략한 소개를 적어주세요 </label>
+        </div>
+
+        <button class="btn btn-primary float-end" type="submit">확인</button>
+
+    </form>
+
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+</body>
+
+</html>

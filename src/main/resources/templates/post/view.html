@@ -13,26 +13,43 @@
         <span th:text="${viewPost.authorNickname} ">작성자</span>  &nbsp;&nbsp;
         <span th:text="'조회수 ' + ${viewPost.views}">조회수</span>  &nbsp;
         <span th:if="${viewPost.createDate.equals(viewPost.lastModifiedDate)}" class="float-end"
-              th:text="'작성일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">작성시간</span>
+              th:text="'작성일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">작성일시</span>
         <span class="float-end" th:if="${!viewPost.createDate.equals(viewPost.lastModifiedDate)}"
-              th:text="'수정일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">수정시간</span>
-        <p style="min-height: 40vh" class="border-top border-bottom border-1 border-dark" th:utext="${viewPost.content}">본문</p>
+              th:text="'수정일시 ' + ${#temporals.format(viewPost.createDate, 'yyyy-MM-dd hh:mm:ss')}">수정일시</span>
+        <p style="min-height: 40vh" class="border-top border-bottom border-1 border-dark" th:utext="${viewPost.content}">
+            본문
+        </p>
+
     </div>
 
+    <div th:each="comment : ${commentList}">
+        <div  class="border-secondary border border-1 m-1 overflow-auto">
+            <span class="border border-1 w-25 float-start" th:text="${comment.authorNickname}">작성자</span>
+            <span class="m-1" th:text="${comment.comment}">내용</span>
+            <a th:if="${viewPost.author or comment.author}" class="float-end"
+            th:href="@{/comment/{boardAddress}/{postId}/delete(boardAddress=${boardAddress}, postId=${postId}, commentId=${comment.commentId})}">X삭제</a>
+        </div>
+    </div>
 
-    <button  class="btn btn-dark float-end m-2" th:if="${viewPost.author}" th:onclick="'location.href=\'' +
-            @{/board/{boardAddress}/{postId}/delete (boardAddress=${boardAddress}, postId=${postId})}
-            + '\''">삭제하기</button>
+    <form sec:authorize="isAuthenticated()" th:action="@{/comment/{boardAddress}/{postId}/write(boardAddress=${boardAddress},postId=${postId})}" method="post" class="input-group input-group-lg">
+        <input placeholder="댓글내용을 작성하세요" type="text" class="form-control" name="comment"/>
+        <button class="btn btn-outline-primary">댓글 작성</button>
+    </form>
+
+    <div class="overflow-auto">
+        <button  class="btn btn-dark float-end m-2" th:if="${viewPost.author}" th:onclick="'location.href=\'' +
+                @{/board/{boardAddress}/{postId}/delete (boardAddress=${boardAddress}, postId=${postId})}
+                + '\''">삭제하기</button>
 
 
-    <button class="btn btn-secondary float-end m-2" th:if="${viewPost.author}"
-            th:onclick="'location.href=\'' +
-            @{/board/{boardAddress}/{postId}/modify (boardAddress=${boardAddress}, postId=${postId})}
-            + '\''">
-        수정하기
-    </button>
+        <button class="btn btn-secondary float-end m-2" th:if="${viewPost.author}"
+                th:onclick="'location.href=\'' +
+                @{/board/{boardAddress}/{postId}/modify (boardAddress=${boardAddress}, postId=${postId})}
+                + '\''">
+            수정하기
+        </button>
+    </div>
 
-    <br/><br/>
 
 </div>
 

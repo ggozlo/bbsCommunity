@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main text-center" style=" max-width: 1200px">
+
+
+    <div class="w-100 text-center m-3" style="height: 10vh">
+            <span class="d-inline-block  w-25 border border-3 border-secondary fs-3 text-secondary"
+                  onclick="location.href='/member/info'">회원 정보</span>
+        <span class="d-inline-block  w-25 border border-3 border-secondary fs-3 text-secondary"
+              onclick="location.href='/member/post'">게시글 조회</span>
+        <span class="d-inline-block  w-25 border border-3 border-success fs-3 text-success">댓글 조회</span>
+    </div>
+
+    <b th:text="|작성한 총 댓글수: ${commentPage.getTotalElements()}|">총 숫자</b>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>글제목</th>
+            <th>내용</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${commentPage}">
+            <td><a th:text="${comment.postTitle}" th:href="@{/board/{boardAddress}/{postId}(boardAddress=${comment.boardAddress}, postId=${comment.postId})}">글제목</a></td>
+            <td th:utext="${comment.content}">내용</td>
+            <td th:text="${#temporals.format(comment.createDate, 'yy.MM.dd-hh:mm')}">작성일시</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div th:if="${!commentPage.isEmpty()}" >
+        <ul class="pagination justify-content-center"
+            th:with=" start = ${T(Math).floor(commentPage.number/10)*10 +1} ,
+                         last=(${start + 9 < commentPage.totalPages ? start + 9 : commentPage.totalPages})">
+
+            <li class="page-item" th:if="${!commentPage.first}">
+                <a class="page-link" th:href="@{/member/comment (page=1)}" aria-label="First">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:if="${!commentPage.first}">
+                <a class="page-link" th:href="@{/member/comment (page=${ commentPage.number })} " aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:each="pageNumber: ${#numbers.sequence(start , last )}" th:class="${pageNumber ==  commentPage.number} ? 'active'">
+                <a class="page-link" th:text="${pageNumber}" th:href="@{/member/comment (page=${pageNumber})}"></a>
+            </li>
+
+            <li class="page-item" th:if="${!commentPage.last}">
+                <a class="page-link" th:href="@{/member/comment (page=${ commentPage.number + 2})} " aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:if="${!commentPage.last}">
+                <a class="page-link" th:href="@{/member/comment (page=${commentPage.totalPages})}" aria-label="Last">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+<footer th:replace="/fragment/footer::footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = ${'BBSCommunity'})"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main text-center" style="max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1>게시판 잠금</h1>
+        <div class="m-2" th:if="${isActive}" th:text="#{Message.Board.LockDescribe}" />
+        <div class="m-2" th:if="${!isActive}" th:text="#{Message.Board.UnlockDescribe}" />
+
+        <form method="post"  th:action="@{/board/{boardAddress}/lock(boardAddress=${boardAddress}, isActive=${isActive})}">
+
+            <button class="btn btn-light m-4" type="button"
+                    th:onclick="'location.href=\'' + @{/board/{boardAddress}(boardAddress=${boardAddress})} + '\''">
+                취소</button>
+
+            <button class="btn btn-danger m-4" type="submit">확인</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="/fragment/footer::footer"></footer>
+
+</body>
+</html>

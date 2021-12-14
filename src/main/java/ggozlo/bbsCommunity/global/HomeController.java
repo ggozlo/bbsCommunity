@@ -14,15 +14,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Slf4j
 @Controller
 public class HomeController {
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
         model.addAttribute("message", "Welcome!");
         return "home";
     }
@@ -31,9 +35,10 @@ public class HomeController {
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "exception", required = false) String exception,
                         @RequestParam(value = "jump", required = false) String jump,
-                        Model model) {
-
-
+                        Model model, Principal principal) {
+        if (principal != null) {
+            return "/home";
+        }
         model.addAttribute("jump", jump);
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head::head(title = 'BBSCommunity')"></head>
+
+<body>
+
+<header th:replace="/fragment/header::header"></header>
+
+<div class="container main" style=" max-width: 1200px">
+    <div style="padding-top: 50px">
+        <h1>추가할 사용자의 닉네임을 입력하시오</h1>
+    </div>
+    <form method="post" th:action="@{/board/{boardAddress}/addManager(boardAddress=${boardAddress})}">
+        <input placeholder="추가할 사용자의 별명을 입력하시오" class="form-control" name="nickname" type="text">
+        <button type="submit" class="btn btn-primary">추가</button>
+    </form>
+</div>
+
+
+
+
+<footer th:replace="/fragment/footer::footer"></footer>
+</body>
+
+</html>

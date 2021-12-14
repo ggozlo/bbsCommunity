@@ -6,12 +6,18 @@ import ggozlo.bbsCommunity.global.dto.post.PostListDto;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
+
 @Data
 public class BoardMainDto {
 
     private String boardName;
     private String describe;
     private Page<PostListDto> postPage;
+    private boolean activation;
+
+    private LocalDateTime createDate;
+    private LocalDateTime lastModifiedDate;
 
     public BoardMainDto(Board board) {
         this.boardName = board.getName();
@@ -20,8 +26,11 @@ public class BoardMainDto {
     }
 
     @QueryProjection
-    public BoardMainDto(String boardName, String describe) {
+    public BoardMainDto(String boardName, String describe, boolean activation, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
         this.boardName = boardName;
         this.describe = describe;
+        this.activation = activation;
+        this.createDate = createDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

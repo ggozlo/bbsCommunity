@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class MemberInfoDto {
 
+    private Long id;
     private String username;
     private String email;
     private String nickname;
