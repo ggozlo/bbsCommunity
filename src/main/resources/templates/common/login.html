@@ -1,7 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="/fragment/head::head(title='BBSCommunity')" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="'BBSCommunity'">Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <style>
+        .main{
+            min-height: 76vh;
+        }
+    </style>
+</head>
 
 <body>
     <header th:replace="/fragment/header::header"/>

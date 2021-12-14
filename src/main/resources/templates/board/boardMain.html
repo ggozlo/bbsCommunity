@@ -1,10 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="/fragment/head::head(title='BBSCommunity')"></head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="'BBSCommunity'">Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <style>
+        .main{
+            min-height: 76vh;
+        }
+    </style>
+</head>
 
 <body>
 
-<header th:replace="/fragment/header::header"></header>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="/board/list" class="nav-link px-2 text-white">게시판 목록</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/board/create" class="nav-link px-2 text-white">게시판 생성</a></li>
+                <li sec:authorize="hasRole('admin')"><a href="/member/memberList" class="nav-link px-2 text-white">전체회원조회</a></li>
+            </ul>
+
+            <div class="text-end">
+
+
+                <button type="button" class="btn btn-outline-light me-2" sec:authorize="isAnonymous()"
+                        th:onclick="'location.href=\'' + @{/login (jump=${#httpServletRequest.getRequestURI()})} + '\''">
+                    Login
+                </button>
+
+                <button type="button" class="btn btn-outline-light me-2" th:text="#{Member.Info}"
+                        sec:authorize="isAuthenticated()" onclick="location.href='/member/info'">회원정보</button>
+
+                <button sec:authorize="isAnonymous()" type="button" onclick="location.href='/member/join'"
+                        th:text="#{Member.Join}" class="btn btn-warning">회원가입</button>
+                <button sec:authorize="isAuthenticated()" type="button"
+                        th:onclick="'location.href=\'' + @{/logout (jump=${#httpServletRequest.getRequestURI()})} + '\''"
+                        class="btn btn-warning">로그아웃</button>
+
+            </div>
+            <div style="margin-left: 10px">
+                <h4 sec:authorize="isAuthenticated()" sec:authentication="principal.nickname">사용자</h4>
+            </div>
+        </div>
+    </div>
+</header>
 
 <div class="container main" style="max-width: 1200px">
     <div class="my-5">
