@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <form sec:authorize="isAuthenticated()" th:class="m-1" th:action="@{/comment/{boardAddress}/{postId}/write(boardAddress=${boardAddress},postId=${postId})}" method="post" class="input-group input-group-lg">
+    <form sec:authorize="isAuthenticated()" th:action="@{/comment/{boardAddress}/{postId}/write(boardAddress=${boardAddress},postId=${postId})}" method="post" class="input-group input-group-lg">
         <input placeholder="댓글내용을 작성하세요" type="text" class="form-control" name="comment"/>
         <button class="btn btn-outline-primary">댓글 작성</button>
     </form>
