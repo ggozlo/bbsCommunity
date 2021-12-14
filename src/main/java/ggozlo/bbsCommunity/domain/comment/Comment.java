@@ -12,7 +12,6 @@ import javax.persistence.*;
         sequenceName = "commentSeq",  name = "commentSeq"
 )
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id", "member", "post"})
 @Getter
 public class Comment extends BaseTimeEntity {
 

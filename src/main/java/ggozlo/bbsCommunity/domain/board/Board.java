@@ -20,7 +20,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of ={"name", "nickName"})
 @Getter @Setter
 public class Board extends BaseTimeEntity {
 
