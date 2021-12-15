@@ -21,6 +21,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter @Setter
+@EqualsAndHashCode(of = "address")
 public class Board extends BaseTimeEntity {
 
     @Id

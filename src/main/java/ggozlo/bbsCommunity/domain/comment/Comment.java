@@ -13,6 +13,7 @@ import javax.persistence.*;
 )
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode(of = {"id", "content"})
 public class Comment extends BaseTimeEntity {
 
     @Id

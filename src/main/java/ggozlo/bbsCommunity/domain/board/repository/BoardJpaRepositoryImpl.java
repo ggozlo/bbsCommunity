@@ -91,9 +91,6 @@ public class BoardJpaRepositoryImpl implements BoardJpaRepository{
         return new PageImpl<PostListDto>(postList, pageable, totalPage);
     }
 
-    /**
-     * postgre 의 text 속성이 쿼리 Dsl 의 contains 가 안먹히는 거 같다...
-     */
     private BooleanExpression search(String type, String parameter) {
         if (parameter == null || type == null ) {
             return null;
@@ -121,7 +118,10 @@ public class BoardJpaRepositoryImpl implements BoardJpaRepository{
                 .from(qBoard)
                 .join(qBoard.authorityList, qAuthority).fetchJoin()
                 .join(qAuthority.member, qMember).fetchJoin()
+                .where(qAuthority.role.contains("_Prime"))
                 .fetch();
+        // fetchjoin 때문에 Board 내용이 중복되는 row 가 Minor 매니저의 수 만큼 더 추가되는 현상이 있었다.
+        // Prime 권한을 보유한 권한만 조회함으로써 문제를 해결했다
     }
 
     @Override

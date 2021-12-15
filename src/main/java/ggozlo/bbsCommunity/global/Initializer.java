@@ -30,7 +30,7 @@ public class Initializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init(){
-        Long adminId = memberService.createAdmin(adminUsername, "1234", "ggozlo@naver.com", "운영자");
+        Long adminId = memberService.createAdmin(adminUsername, "1234", "admin@admin.com", "운영자");
 
         BoardCreateDto noticeBoardDto = new BoardCreateDto("notice", "공지사항", "BBSCommunity 공지게시판 입니다.", adminId);
         String noticeBoard = boardService.createBoard(noticeBoardDto);

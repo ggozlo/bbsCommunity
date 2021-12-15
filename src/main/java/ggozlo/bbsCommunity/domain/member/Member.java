@@ -17,6 +17,7 @@ import java.util.List;
         sequenceName = "memberSeq",
         name = "memberSeq"
 )
+@EqualsAndHashCode(of = {"id", "username"})
 public class Member extends BaseTimeEntity {
 
     @Id

@@ -18,6 +18,7 @@ import java.util.List;
 @SequenceGenerator(
         sequenceName = "postSeq", name = "postSeq"
 )
+@EqualsAndHashCode(of = {"id", "title"})
 public class Post extends BaseTimeEntity {
 
     @Id

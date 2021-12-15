@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id","member", "board", "role"})
+@EqualsAndHashCode(of = {"id", "role"})
 public class Authority {
 
     @Id
@@ -23,7 +23,7 @@ public class Authority {
     @JoinColumn(nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(nullable = true)
     private Board board;
 

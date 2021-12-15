@@ -38,7 +38,7 @@ public class MemberController {
     @GetMapping("/join")
     public String joinForm(@ModelAttribute("memberJoinForm") MemberJoinDto memberDto, Principal principal) {
         if (principal != null) {
-            return "/home";
+            return "home";
         }
         return "member/joinForm";
     }

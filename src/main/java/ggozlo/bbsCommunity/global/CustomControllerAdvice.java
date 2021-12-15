@@ -17,7 +17,6 @@ public class CustomControllerAdvice {
 
     private final MessageSource messageSource;
 
-
     @ExceptionHandler(CustomException.class) // 직접 생성한 예외 처리용
     public String exceptionHandling(Model model, CustomException e, HttpServletRequest request) {
         log.debug("customExceptionHandler Called!");
